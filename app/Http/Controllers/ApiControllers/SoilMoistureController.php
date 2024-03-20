@@ -50,7 +50,8 @@ class SoilMoistureController extends Controller
             $secondPreviousNodeSendLog = $previousNodeSendLogs->last();
             if ($firstPreviousNodeSendLog) {
                 $firstPreviousNodeSendLog->delay = $request->delay;
-                $firstPreviousNodeSendLog->jitter = $secondPreviousNodeSendLog->delay ? $request->delay - $secondPreviousNodeSendLog->delay : 0;
+                $firstPreviousNodeSendLog->jitter = $secondPreviousNodeSendLog->delay ? $request->delay - $secondPreviousNodeSendLog->delay : null;
+                $firstPreviousNodeSendLog->payload_size = $request->payload_size;
                 $firstPreviousNodeSendLog->save();
             }
 
