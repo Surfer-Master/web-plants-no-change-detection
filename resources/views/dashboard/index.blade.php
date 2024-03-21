@@ -63,15 +63,6 @@
                 <h5 class="text-xl font-bold text-gray-900 dark:text-white">Kelembapan Udara</h5>
                 <div id="humidity-radial-chart"></div>
             </div>
-
-            {{-- <div class="w-full bg-white rounded-md shadow">
-                <div class="bg-sky-50 border-b-2 p-3">
-                    <h6 class="font-bold text-blue-600 underline">Header</h6>
-                </div>
-                <div class="p-3">
-
-                </div>
-            </div> --}}
         </div>
         <div class="w-full px-2 lg:w-3/4">
             <div class="w-full bg-white rounded-lg shadow">
@@ -81,20 +72,20 @@
                 <div class="relative overflow-x-auto m-3">
                     <table class="datatable w-full text-sm text-left text-gray-50">
                         <thead class="text-xs text-gray-700 uppercase font-bold bg-gray-50 dark:bg-gray-70">
-                            <tr class="text-center">
-                                <th scope="col" class="p-3">
+                            <tr>
+                                <th scope="col text-center" class="text-center p-3">
                                     No
                                 </th>
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="text-center px-6 py-3">
                                     Nama Tanaman
                                 </th>
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="text-center px-6 py-3">
                                     Lokasi
                                 </th>
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="text-center px-6 py-3">
                                     Kelembapan Tanah
                                 </th>
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="text-center px-6 py-3">
                                     Action
                                 </th>
                             </tr>
@@ -114,7 +105,7 @@
                                         {{ $plant->location ?? '-' }}
                                     </td>
                                     <td class="px-6 py-4 text-gray-900">
-                                        {{ $plant->soilMoistures->first()->moisture ?? '-' }}
+                                        {{ $plant->latestSoilMoisture ? $plant->latestSoilMoisture->moisture . ' %' : '-' }}
                                     </td>
                                     <td class="px-6 py-4 text-gray-900">
                                         <a href="#"
@@ -146,7 +137,7 @@
         });
 
         var temperatureRadialChartOptions = {
-            series: [70],
+            series: [{{ $airTemperature->temperature ?? 0 }}],
             colors: ['#1C64F2'],
             chart: {
                 height: 300,
@@ -160,6 +151,23 @@
                         size: '60%',
                         background: 'transparent',
                     },
+                    dataLabels: {
+                        show: true,
+                        name: {
+                            offsetY: -10,
+                            show: true,
+                            // color: '#888',
+                            // fontSize: '17px'
+                        },
+                        value: {
+                            formatter: function(val) {
+                                return parseInt(val) + '℃';
+                            },
+                            // color: '#111',
+                            fontSize: '36px',
+                            show: true,
+                        }
+                    },
                 },
             },
             labels: ['Suhu Udara'],
@@ -168,6 +176,11 @@
                 x: {
                     show: false,
                 },
+                y: {
+                    formatter: function(value) {
+                        return value + '℃';
+                    }
+                }
             },
         };
 
@@ -176,7 +189,7 @@
         temperatureChart.render();
 
         var humidityRadialChartOptions = {
-            series: [70],
+            series: [{{ $humidity->humidity }}],
             colors: ['#16BDCA'],
             chart: {
                 height: 300,
@@ -190,6 +203,23 @@
                         size: '60%',
                         background: 'transparent',
                     },
+                    dataLabels: {
+                        show: true,
+                        name: {
+                            offsetY: -10,
+                            show: true,
+                            // color: '#888',
+                            // fontSize: '17px'
+                        },
+                        value: {
+                            formatter: function(val) {
+                                return parseInt(val) + '%';
+                            },
+                            // color: '#111',
+                            fontSize: '36px',
+                            show: true,
+                        }
+                    },
                 },
             },
             labels: ['Kelembapan Udara'],
@@ -198,12 +228,17 @@
                 x: {
                     show: false,
                 },
+                y: {
+                    formatter: function(value) {
+                        return value + '%';
+                    }
+                }
             },
         };
 
         var humidityChart = new ApexCharts(document.querySelector("#humidity-radial-chart"), humidityRadialChartOptions);
         humidityChart.render();
 
-        humidityChart.updateSeries([10]);
+        // humidityChart.updateSeries([10]);
     </script>
 @endpush

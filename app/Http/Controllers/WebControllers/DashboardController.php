@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\WebControllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\AirTemperature;
+use App\Models\Humidity;
 use App\Models\Plant;
 use Illuminate\Http\Request;
 
@@ -14,12 +16,15 @@ class DashboardController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $plants = Plant::with(['soilMoistures' => function ($query) {
-            $query->latest()->first();
-        }])->get();
+        $plants = Plant::with(['latestSoilMoisture'])->get();
+
+        $humidity = Humidity::latest()->first();
+        $airTemperature = AirTemperature::latest()->first();
 
         return view('dashboard.index', [
             'title' => 'Dashboard',
+            'airTemperature' => $airTemperature,
+            'humidity' => $humidity,
             'plants' => $plants,
         ]);
     }
