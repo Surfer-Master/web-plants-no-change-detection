@@ -18,6 +18,27 @@ class NodeSendLogController extends Controller
 
         $nodeSendLogs = NodeSendLog::with(['node', 'bandwidth'])->get();
 
+        // $previousNodeSendLogs = NodeSendLog::where('node_id', $request->node)
+        //     ->latest('created_at')
+        //     ->take(10)
+        //     ->get();
+        // $previousNodeSendLogs = $previousNodeSendLogs->sortBy('id');
+        // $previousNodeSendLogs->last()->delay = $request->delay;
+        // $delays = $previousNodeSendLogs->pluck('delay')->toArray();
+
+        // $totalVariasiDelay = 0;
+        // // $meanDelay = array_sum($delays) / count($delays);
+
+        // for ($i = 0; $i < count($delays); $i++) {
+        //     $totalVariasiDelay += abs($delays[$i] - $delays[$i - 1]);
+        //     // $totalVariasiDelay += $delays[$i] - $meanDelay;
+        // }
+
+        // // $result = (float) number_format($result, 2);
+        // $previousNodeSendLogs->last()->jitter = number_format($totalVariasiDelay / (count($delays) - 1), 4);
+
+        // $previousNodeSendLogs->last()->save();
+
         return view('node-send-logs.index', [
             'title' => 'Log Pengiriman Node',
             'nodeSendLogs' => $nodeSendLogs,

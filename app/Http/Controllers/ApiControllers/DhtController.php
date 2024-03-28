@@ -41,39 +41,20 @@ class DhtController extends Controller
                 'payload_size' => 'nullable|numeric',
             ]);
 
-            // $previousNodeSendLogs = NodeSendLog::where('node_id', $request->node)
-            //     ->latest('created_at')
-            //     ->take(2)
-            //     ->get();
-            // $firstPreviousNodeSendLog = $previousNodeSendLogs->first();
-            // $secondPreviousNodeSendLog = $previousNodeSendLogs->last();
-            // if ($firstPreviousNodeSendLog) {
-            //     $firstPreviousNodeSendLog->delay = $request->delay;
-            //     $firstPreviousNodeSendLog->jitter = $secondPreviousNodeSendLog->delay ? $request->delay - $secondPreviousNodeSendLog->delay : null;
-            //     $firstPreviousNodeSendLog->payload_size = $request->payload_size;
-            //     $firstPreviousNodeSendLog->save();
-            // }
-
             $previousNodeSendLogs = NodeSendLog::where('node_id', $request->node)
                 ->latest('created_at')
-                ->take(10)
+                ->take(2)
                 ->get();
-            $previousNodeSendLogs = $previousNodeSendLogs->sortBy('id');
-            $previousNodeSendLogs->last()->delay = $request->delay;
-            $delays = $previousNodeSendLogs->pluck('delay')->toArray();
-
-            $totalVariasiDelay = 0;
-            // $meanDelay = array_sum($delays) / count($delays);
-
-            for ($i = 0; $i < count($delays); $i++) {
-                $totalVariasiDelay += abs($delays[$i] - $delays[$i - 1]);
-                // $totalVariasiDelay += $delays[$i] - $meanDelay;
+            $firstPreviousNodeSendLog = $previousNodeSendLogs->first();
+            if ($previousNodeSendLogs->count() == 2) {
+                $secondPreviousNodeSendLog = $previousNodeSendLogs->last();
             }
-
-            // $result = (float) number_format($result, 2);
-            $previousNodeSendLogs->last()->jitter = number_format($totalVariasiDelay / (count($delays) - 1), 4);
-
-            $previousNodeSendLogs->last()->save();
+            if ($firstPreviousNodeSendLog) {
+                $firstPreviousNodeSendLog->delay = $request->delay;
+                $firstPreviousNodeSendLog->jitter = $secondPreviousNodeSendLog->delay ? abs($request->delay - $secondPreviousNodeSendLog->delay) : null;
+                $firstPreviousNodeSendLog->payload_size = $request->payload_size;
+                $firstPreviousNodeSendLog->save();
+            }
 
             $bandwidth = Bandwidth::where('active', 1)->first();
 
@@ -88,7 +69,6 @@ class DhtController extends Controller
             $nodeSendLog->data_send_count = $request->data_send_count;
             $nodeSendLog->save();
 
-
             $airTemperature = new AirTemperature();
             $airTemperature->temperature = $request->temperature;
             $airTemperature->nodeSendLog()->associate($nodeSendLog);
@@ -99,7 +79,9 @@ class DhtController extends Controller
             $humidity->nodeSendLog()->associate($nodeSendLog);
             $humidity->save();
 
-            return response()->json('{"node":1,"temperature":34,"humidity":79,"sensor_read_count":44,"data_send_count":44,"delay":316,"payload_size":116}', 201);
+            return response()->json([
+                'message' => 'success',
+            ], 201);
         } catch (ValidationException $e) {
             return response()->json(['message' => $e->getMessage(), 'errors' => $e->errors()], 422);
         } catch (QueryException $e) {

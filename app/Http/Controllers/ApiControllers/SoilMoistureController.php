@@ -41,40 +41,19 @@ class SoilMoistureController extends Controller
                 'payload_size' => 'nullable|numeric',
             ]);
 
-            // $previousNodeSendLogs = NodeSendLog::where('node_id', $request->node)
-            //     ->latest('created_at')
-            //     ->take(2)
-            //     ->get();
-
-            // $firstPreviousNodeSendLog = $previousNodeSendLogs->first();
-            // $secondPreviousNodeSendLog = $previousNodeSendLogs->last();
-            // if ($firstPreviousNodeSendLog) {
-            //     $firstPreviousNodeSendLog->delay = $request->delay;
-            //     $firstPreviousNodeSendLog->jitter = $secondPreviousNodeSendLog->delay ? $request->delay - $secondPreviousNodeSendLog->delay : null;
-            //     $firstPreviousNodeSendLog->payload_size = $request->payload_size;
-            //     $firstPreviousNodeSendLog->save();
-            // }
-
             $previousNodeSendLogs = NodeSendLog::where('node_id', $request->node)
                 ->latest('created_at')
-                ->take(10)
+                ->take(2)
                 ->get();
-            $previousNodeSendLogs = $previousNodeSendLogs->sortBy('id');
-            $previousNodeSendLogs->last()->delay = $request->delay;
-            $delays = $previousNodeSendLogs->pluck('delay')->toArray();
 
-            $totalVariasiDelay = 0;
-            // $meanDelay = array_sum($delays) / count($delays);
-
-            for ($i = 0; $i < count($delays); $i++) {
-                $totalVariasiDelay += abs($delays[$i] - $delays[$i - 1]);
-                // $totalVariasiDelay += $delays[$i] - $meanDelay;
+            $firstPreviousNodeSendLog = $previousNodeSendLogs->first();
+            $secondPreviousNodeSendLog = $previousNodeSendLogs->last();
+            if ($firstPreviousNodeSendLog) {
+                $firstPreviousNodeSendLog->delay = $request->delay;
+                $firstPreviousNodeSendLog->jitter = $secondPreviousNodeSendLog->delay ? abs($request->delay - $secondPreviousNodeSendLog->delay) : null;
+                $firstPreviousNodeSendLog->payload_size = $request->payload_size;
+                $firstPreviousNodeSendLog->save();
             }
-
-            // $result = (float) number_format($result, 2);
-            $previousNodeSendLogs->last()->jitter = number_format($totalVariasiDelay / (count($delays) - 1), 4);
-
-            $previousNodeSendLogs->last()->save();
 
             $bandwidth = Bandwidth::where('active', 1)->first();
 

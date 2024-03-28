@@ -18,7 +18,7 @@ return new class extends Migration
             // $table->dateTime('send_time', $precision = 6)->nullable();
             // $table->dateTime('receipt_time', $precision = 6)->nullable();
             $table->integer('delay')->nullable();
-            $table->double('jitter', 10, 4)->nullable();
+            $table->integer('jitter')->nullable();
             $table->integer('sensor_read_count')->nullable();
             $table->integer('data_send_count')->nullable();
             $table->integer('payload_size')->nullable();

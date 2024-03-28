@@ -189,7 +189,7 @@
         temperatureChart.render();
 
         var humidityRadialChartOptions = {
-            series: [{{ $humidity->humidity }}],
+            series: [{{ $humidity->humidity ?? 0 }}],
             colors: ['#16BDCA'],
             chart: {
                 height: 300,
