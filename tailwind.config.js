@@ -7,6 +7,7 @@ export default {
         "./resources/**/*.js",
         "./resources/**/*.vue",
         "./node_modules/flowbite/**/*.js",
+        "./public/vendor/datatables/dataTables.tailwindcss.min.js",
     ],
     theme: {
         extend: {
