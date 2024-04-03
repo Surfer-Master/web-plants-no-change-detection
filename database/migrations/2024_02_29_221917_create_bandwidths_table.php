@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('bandwidths', function (Blueprint $table) {
             $table->id();
             $table->integer('bandwidth');
-            $table->boolean('active');
+            $table->boolean('active')->default(false);
             $table->timestamps();
         });
     }

@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             NodeSeeder::class,
             PlantSeeder::class,
+            BandwidthSeeder::class
         ]);
     }
 }
