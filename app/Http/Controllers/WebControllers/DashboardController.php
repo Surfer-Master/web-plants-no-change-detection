@@ -49,7 +49,7 @@ class DashboardController extends Controller
         // ORDER BY (data_length + index_length) DESC;
 
         return view('dashboard.index', [
-            'title' => 'Smart Farming - Dashboard',
+            'title' => 'Smart Farming | Dashboard',
             'nodesCount' => $nodesCount,
             'plants' => $plants,
             'nodeSendLogsCount' => $nodeSendLogsCount,

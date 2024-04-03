@@ -19,7 +19,7 @@ class NodeController extends Controller
         $nodes = Node::get();
 
         return view('nodes.index', [
-            'title' => 'Node',
+            'title' => 'Smart Farming | Node',
             'nodes' => $nodes,
         ]);
     }
