@@ -16,7 +16,13 @@ class NodeSendLogController extends Controller
     {
         $user = auth()->user();
 
-        $nodeSendLogs = NodeSendLog::with(['node', 'bandwidth'])->get();
+        $nodeSendLogs = NodeSendLog::with([
+            'node',
+            'bandwidth',
+            'airTemperature',
+            'humidity',
+            'soilMoistures' => ['plant']
+        ])->get();
 
         // $previousNodeSendLogs = NodeSendLog::where('node_id', $request->node)
         //     ->latest('created_at')
