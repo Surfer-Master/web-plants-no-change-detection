@@ -13,7 +13,7 @@ class SoilMoisture extends Model
 
     public function plant(): BelongsTo
     {
-        return $this->belongsTo(plant::class, 'plant_id', 'id');
+        return $this->belongsTo(Plant::class, 'plant_id', 'id');
     }
 
     public function nodeSendLog(): BelongsTo

@@ -25,7 +25,7 @@ class NodeSendLog extends Model
 
     public function airTemperature(): HasOne
     {
-        return $this->hasOne(AirTemperature::class, 'air_temperature_id', 'id');
+        return $this->hasOne(AirTemperature::class, 'node_send_log_id', 'id');
     }
 
     public function humidity(): HasOne
