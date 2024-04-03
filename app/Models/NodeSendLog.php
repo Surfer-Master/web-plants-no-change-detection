@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class NodeSendLog extends Model
@@ -32,8 +33,8 @@ class NodeSendLog extends Model
         return $this->hasOne(Humidity::class, 'node_send_log_id', 'id');
     }
 
-    public function soilMoisture(): HasOne
+    public function soilMoistures(): HasMany
     {
-        return $this->hasOne(SoilMoisture::class, 'node_send_log_id', 'id');
+        return $this->hasMany(SoilMoisture::class, 'node_send_log_id', 'id');
     }
 }
