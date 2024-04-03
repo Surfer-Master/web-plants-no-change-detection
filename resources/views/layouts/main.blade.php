@@ -20,8 +20,10 @@
 <body id="page-top">
     @include('layouts.partials.sidebar')
     @include('layouts.partials.navbar')
-    <div class="py-[4.25rem] max-w-screen-xl mx-auto">
-        @yield('content')
+    <div class="pt-24 pb-14 max-w-screen-xl mx-auto">
+        <div class="px-2">
+            @yield('content')
+        </div>
     </div>
     @include('layouts.partials.footer')
 
