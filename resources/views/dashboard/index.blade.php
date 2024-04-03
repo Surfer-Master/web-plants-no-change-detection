@@ -17,7 +17,7 @@
 @endpush
 
 @section('content')
-    <div class="grid px-2 py-6 grid-cols-2 gap-4 lg:grid-cols-4">
+    <div class="grid pb-6 grid-cols-2 gap-4 lg:grid-cols-4">
         <div class="block p-5 bg-white border-l-[0.25rem] border-primary-600 rounded-lg shadow h-24 sm:minw">
             <div class="flex justify-between ">
                 <div>
@@ -67,15 +67,15 @@
     <div class="flex flex-wrap h-min justify-center">
         <div class="flex flex-wrap h-min gap-4 w-full px-2 mb-4 lg:w-1/4">
             <div class="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 mx-auto py-2 px-4 md:py-3 md:px-6">
-                <h5 class="text-xl font-bold text-gray-900 dark:text-white">Suhu Udara</h5>
+                <h5 class="text-lg font-bold text-gray-900 dark:text-white">Suhu Udara</h5>
                 <div id="temperature-radial-chart"></div>
             </div>
             <div class="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 mx-auto py-2 px-4 md:py-3 md:px-6">
-                <h5 class="text-xl font-bold text-gray-900 dark:text-white">Kelembapan Udara</h5>
+                <h5 class="text-lg font-bold text-gray-900 dark:text-white">Kelembapan Udara</h5>
                 <div id="humidity-radial-chart"></div>
             </div>
             <div class="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 mx-auto py-2 px-4 md:py-3 md:px-6">
-                <h5 class="text-xl font-bold text-gray-900 dark:text-white">Penyimpanan</h5>
+                <h5 class="text-lg font-bold text-gray-900 dark:text-white">Penyimpanan</h5>
                 <div id="storage-radial-chart"></div>
                 <div class="font-semibold -mt-6 text-center">
                     {{ $storageSize->total_size_MB ?? 0 }} MB / 1024,00 MB
@@ -85,7 +85,7 @@
         <div class="w-full px-2 lg:w-3/4">
             <div class="w-full bg-white rounded-lg shadow">
                 <div class="border-b">
-                    <h5 class="text-xl font-bold text-gray-900 py-2 px-4 md:py-3 md:px-6">Kelembapan Tanah</h5>
+                    <h5 class="text-lg font-bold text-gray-900 py-2 px-4 md:py-3 md:px-6">Kelembapan Tanah</h5>
                 </div>
                 <div class="relative overflow-x-auto p-2">
                     <table class="datatable w-full">
@@ -107,14 +107,14 @@
                         </thead>
                         <tbody>
                             @foreach ($plants as $plant)
-                                <tr>
-                                    <th scope="row" class="text-center">
+                                <tr class="text-center">
+                                    <th scope="row">
                                         {{ $loop->iteration }}
                                     </th>
                                     <td>
                                         {{ $plant->name ?? '-' }}
                                     </td>
-                                    <td class="text-center">
+                                    <td>
                                         {{ $plant->location ?? '-' }}
                                     </td>
                                     <td class="text-center">
