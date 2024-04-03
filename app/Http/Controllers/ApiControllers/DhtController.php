@@ -48,10 +48,12 @@ class DhtController extends Controller
             $firstPreviousNodeSendLog = $previousNodeSendLogs->first();
             if ($previousNodeSendLogs->count() == 2) {
                 $secondPreviousNodeSendLog = $previousNodeSendLogs->last();
+            } else {
+                $secondPreviousNodeSendLog = null;
             }
             if ($firstPreviousNodeSendLog) {
                 $firstPreviousNodeSendLog->delay = $request->delay;
-                $firstPreviousNodeSendLog->jitter = $secondPreviousNodeSendLog->delay ? abs($request->delay - $secondPreviousNodeSendLog->delay) : null;
+                $firstPreviousNodeSendLog->jitter = $secondPreviousNodeSendLog ? abs($request->delay - $secondPreviousNodeSendLog->delay) : null;
                 $firstPreviousNodeSendLog->payload_size = $request->payload_size;
                 $firstPreviousNodeSendLog->save();
             }
