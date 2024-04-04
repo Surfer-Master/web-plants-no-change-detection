@@ -85,14 +85,19 @@ class DhtController extends Controller
                 'message' => 'success',
             ], 201);
         } catch (ValidationException $e) {
+            info('ValidationException INFO : ' . $e->getMessage());
             return response()->json(['message' => $e->getMessage(), 'errors' => $e->errors()], 422);
         } catch (QueryException $e) {
+            info('QueryException INFO : ' . $e->getMessage());
             return response()->json(['message' => 'Terjadi kesalahan database.'], 500);
         } catch (HttpException $e) {
+            info('HttpException INFO : ' . $e->getMessage());
             return response()->json(['message' => $e->getMessage()], $e->getStatusCode());
         } catch (HttpResponseException $e) {
+            info('HttpResponseException INFO : ' . $e->getMessage());
             return response()->json(['message' => 'Terjadi kesalahan dalam respons.'], 500);
         } catch (Exception $e) {
+            info('Exception INFO : ' . $e->getMessage());
             return response()->json(['message' => 'Terjadi Kesalahan Server.'], 500);
         }
     }
