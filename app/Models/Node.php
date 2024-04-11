@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Node extends Model
@@ -20,5 +21,10 @@ class Node extends Model
     public function nodeSendLogs(): HasMany
     {
         return $this->hasMany(NodeSendLog::class, 'node_id', 'id');
+    }
+
+    public function latestNodeSendLog(): HasOne
+    {
+        return $this->hasOne(NodeSendLog::class, 'node_id', 'id')->latestOfMany();
     }
 }

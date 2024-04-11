@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Node;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreNodeRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class StoreNodeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->user()->can('create', Node::class);
     }
 
     /**
@@ -22,7 +24,11 @@ class StoreNodeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nama' => 'required',
+            'sensor' =>  [
+                'required',
+                Rule::in(['dht', 'soil-moisture']),
+            ],
         ];
     }
 }
