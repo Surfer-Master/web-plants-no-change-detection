@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Plant;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StorePlantRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class StorePlantRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->user()->can('create', Plant::class);
     }
 
     /**
@@ -21,8 +23,47 @@ class StorePlantRequest extends FormRequest
      */
     public function rules(): array
     {
+        $usedSoilMoistureOrders = Plant::whereHas(
+            'node',
+            fn ($query) => $query->where('id', $this->node)
+        )
+            ->pluck('soil_moisture_order')
+            ->toArray();
+
         return [
-            //
+            'node' => 'required|exists:nodes,id',
+            'nama' => 'required',
+            'lokasi' => 'required',
+            'urutan_sensor' =>  [
+                'required',
+                Rule::in([1, 2, 3, 4]),
+                Rule::notIn($usedSoilMoistureOrders),
+            ],
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        $plantUsedSoilMoistureOrder = Plant::whereHas('node', function ($query) {
+            $query->where('id', $this->node);
+        })->where('soil_moisture_order', $this->urutan_sensor)->first();
+
+        $errorMessage = ':Attribute sudah digunakan pada tanaman';
+        if ($plantUsedSoilMoistureOrder) {
+            $plantName = $plantUsedSoilMoistureOrder->name ?? '';
+            if ($plantUsedSoilMoistureOrder->location) {
+                $plantName .= ' (' . $plantUsedSoilMoistureOrder->location . ')';
+            }
+            $errorMessage .= ' ' . $plantName;
+        }
+
+        return [
+            'urutan_sensor.not_in' => $errorMessage . '.',
         ];
     }
 }

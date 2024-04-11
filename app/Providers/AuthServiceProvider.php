@@ -5,7 +5,9 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 
 use App\Models\Node;
+use App\Models\Plant;
 use App\Policies\NodePolicy;
+use App\Policies\PlantPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -17,6 +19,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Node::class => NodePolicy::class,
+        Plant::class => PlantPolicy::class,
     ];
 
     /**
