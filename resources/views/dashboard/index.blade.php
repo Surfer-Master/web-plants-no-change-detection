@@ -18,8 +18,8 @@
 
 @section('content')
     <div class="grid pb-6 grid-cols-2 gap-4 lg:grid-cols-4">
-        <div class="block p-5 bg-white border-l-[0.25rem] border-primary-600 rounded-lg shadow h-24 sm:minw">
-            <div class="flex justify-between ">
+        <div class="block p-5 bg-white border-l-[0.25rem] border-primary-600 rounded-lg shadow h-24">
+            <div class="flex justify-between">
                 <div>
                     <div class="text-xs font-bold text-primary-600 uppercase mb-1">Node</div>
                     <div class="text-3xl mb-0 font-bold text-gray-800">{{ $nodesCount }}</div>
@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="block p-5 bg-white border-l-[0.25rem] border-green-600 rounded-lg shadow h-24">
-            <div class="flex justify-between ">
+            <div class="flex justify-between">
                 <div>
                     <div class="text-xs font-bold text-green-600 uppercase mb-1">Tanaman</div>
                     <div class="text-3xl mb-0 font-bold text-gray-800">{{ $plants->count() }}</div>
@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="block p-5 bg-white border-l-[0.25rem] border-sky-600 rounded-lg shadow h-24">
-            <div class="flex justify-between ">
+            <div class="flex justify-between">
                 <div>
                     <div class="text-xs font-bold text-sky-600 uppercase mb-1">Log Pengiriman</div>
                     <div class="text-3xl mb-0 font-bold text-gray-800">{{ $nodeSendLogsCount }}</div>
@@ -52,7 +52,7 @@
             </div>
         </div>
         <div class="block p-5 bg-white border-l-[0.25rem] border-red-600 rounded-lg shadow h-24">
-            <div class="flex justify-between ">
+            <div class="flex justify-between">
                 <div>
                     <div class="text-xs font-bold text-red-600 uppercase mb-1">Users</div>
                     <div class="text-3xl mb-0 font-bold text-gray-800">{{ $usersCount }}</div>
@@ -117,7 +117,7 @@
                                     <td>
                                         {{ $plant->location ?? '-' }}
                                     </td>
-                                    <td class="text-center">
+                                    <td>
                                         {{ $plant->latestSoilMoisture ? $plant->latestSoilMoisture->moisture . ' %' : '-' }}
                                     </td>
                                 </tr>
