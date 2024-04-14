@@ -24,9 +24,9 @@ class DashboardController extends Controller
 
         $humidity = Humidity::latest()->first();
         $airTemperature = AirTemperature::latest()->first();
-        $nodesCount = Node::all()->count();
-        $nodeSendLogsCount = NodeSendLog::all()->count();
-        $usersCount = User::all()->count();
+        $nodesCount = Node::count();
+        $nodeSendLogsCount = NodeSendLog::count();
+        $usersCount = User::count();
 
         $storageSize = DB::table('information_schema.tables')
             ->selectRaw('round(SUM(data_length + index_length)/ 1024 / 1024, 2) as total_size_MB')
