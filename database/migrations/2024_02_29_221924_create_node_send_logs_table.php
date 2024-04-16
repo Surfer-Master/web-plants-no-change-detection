@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('node_send_logs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('node_id')->references('id')->on('nodes')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('bandwidth_id')->nullable()->references('id')->on('bandwidths')->onUpdate('cascade')->onDelete('cascade');
             // $table->dateTime('send_time', $precision = 6)->nullable();
             // $table->dateTime('receipt_time', $precision = 6)->nullable();
             $table->integer('delay')->nullable();

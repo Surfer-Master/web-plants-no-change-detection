@@ -111,9 +111,6 @@
                             DATA SENSOR
                         </th>
                         <th scope="col" class="text-center">
-                            BANDWIDTH (Kbps)
-                        </th>
-                        <th scope="col" class="text-center">
                             DELAY (ms)
                         </th>
                         <th scope="col" class="text-center">
@@ -159,9 +156,6 @@
                                         @endforeach
                                     </ul>
                                 @endif
-                            </td>
-                            <td>
-                                {{ $nodeSendLog->bandwidth->bandwidth ?? '-' }}
                             </td>
                             <td>
                                 {{ $nodeSendLog->delay ?? '-' }}

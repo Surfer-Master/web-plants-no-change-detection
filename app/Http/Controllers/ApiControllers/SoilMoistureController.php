@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\ApiControllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Bandwidth;
 use App\Models\NodeSendLog;
 use App\Models\Plant;
 use App\Models\SoilMoisture;
@@ -59,11 +58,8 @@ class SoilMoistureController extends Controller
                 $firstPreviousNodeSendLog->save();
             }
 
-            $bandwidth = Bandwidth::where('active', 1)->first();
-
             $nodeSendLog = new NodeSendLog();
             $nodeSendLog->node_id = $request->node;
-            $nodeSendLog->bandwidth_id = $bandwidth->id ?? null;
             // $nodeSendLog->send_time = null;
             // $nodeSendLog->receipt_time = null;
             // $nodeSendLog->delay = null;

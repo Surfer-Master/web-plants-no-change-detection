@@ -38,7 +38,6 @@ class NodeSendLogController extends Controller
 
         $nodeSendLogs = NodeSendLog::with([
             'node',
-            'bandwidth',
             'airTemperature',
             'humidity',
             'soilMoistures' => ['plant']
