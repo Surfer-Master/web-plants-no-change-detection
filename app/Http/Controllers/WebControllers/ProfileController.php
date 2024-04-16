@@ -16,7 +16,7 @@ class ProfileController extends Controller
         $user = auth()->user();
 
         return view('profile.index', [
-            'title' => 'Profil',
+            'title' => 'Smart Farming | Profil',
         ]);
     }
 
