@@ -21,64 +21,140 @@
     <div class="flex justify-between flex-wrap mb-4">
         <h3 class="text-2xl font-bold text-slate-700">Log Pengiriman</h3>
     </div>
+    <div class="grid pb-6 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="block p-5 bg-white border-l-[0.25rem] border-primary-600 rounded-lg shadow">
+            <div class="flex justify-between">
+                <div>
+                    <div class="text-xs font-bold text-primary-600 uppercase mb-1">Jumlah Log Pengiriman</div>
+                    <ul>
+                        @foreach ($nodes as $node)
+                            <li class="text-base font-bold text-gray-800">
+                                {{ $node->name }} : {{ $node->node_send_logs_count }}
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+                {{-- <div class="my-auto">
+                    <i class="fa-solid fa-circle-nodes fa-2xl text-gray-300"></i>
+                </div> --}}
+            </div>
+        </div>
+        <div class="block p-5 bg-white border-l-[0.25rem] border-green-600 rounded-lg shadow">
+            <div class="flex justify-between">
+                <div>
+                    <div class="text-xs font-bold text-green-600 uppercase mb-1">Packet Loss</div>
+                    <ul>
+                        @foreach ($nodes as $node)
+                            <li class="text-base font-bold text-gray-800">
+                                {{ $node->name }} : {{ $node->packet_loss !== null ? $node->packet_loss . '%' : '-' }}
+                                {{ $node->packet_loss_count !== null ? '(' . $node->packet_loss_count . ')' : '' }}
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+                {{-- <div class="my-auto">
+                    <i class="fa-solid fa-seedling fa-2xl text-gray-300"></i>
+                </div> --}}
+            </div>
+        </div>
+        <div class="block p-5 bg-white border-l-[0.25rem] border-sky-600 rounded-lg shadow">
+            <div class="flex justify-between">
+                <div>
+                    <div class="text-xs font-bold text-sky-600 uppercase mb-1">Delay Rata-Rata</div>
+                    <ul>
+                        @foreach ($nodes as $node)
+                            <li class="text-base font-bold text-gray-800">
+                                {{ $node->name }} : {{ $node->delay !== null ? $node->delay . ' ms' : '-' }}
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+                {{-- <div class="my-auto">
+                    <i class="fa-solid fa-arrow-trend-up fa-2xl text-gray-300"></i>
+                </div> --}}
+            </div>
+        </div>
+        <div class="block p-5 bg-white border-l-[0.25rem] border-red-600 rounded-lg shadow">
+            <div class="flex justify-between">
+                <div>
+                    <div class="text-xs font-bold text-red-600 uppercase mb-1">Jitter</div>
+                    <ul>
+                        @foreach ($nodes as $node)
+                            <li class="text-base font-bold text-gray-800">
+                                {{ $node->name }} : {{ $node->jitter !== null ? $node->jitter . ' ms' : '-' }}
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+                {{-- <div class="my-auto">
+                    <i class="fa-solid fa-users fa-2xl text-gray-300"></i>
+                </div> --}}
+            </div>
+        </div>
+    </div>
 
     <div class="w-full bg-white rounded-lg shadow">
         <div class="border-b">
             <h5 class="text-lg font-bold text-gray-900 py-2 px-4 md:py-3 md:px-6">Data Log Pengiriman</h5>
         </div>
-        <div class="relative overflow-x-auto p-2">
+        <div class="relative overflow-x-auto px-2 pt-2">
             <table class="datatable w-full">
                 <thead>
                     <tr>
-                        <th scope="col" class="text-center uppercase">
-                            No
+                        <th scope="col" class="text-center">
+                            NO
                         </th>
-                        <th scope="col" class="text-center uppercase">
-                            Nama Node
+                        <th scope="col" class="text-center">
+                            NAMA NODE
                         </th>
-                        <th scope="col" class="text-center uppercase">
-                            Data Sensor
+                        <th scope="col" class="text-center">
+                            DATA SENSOR
                         </th>
                         <th scope="col" class="text-center">
                             BANDWIDTH (Kbps)
                         </th>
-                        <th scope="col" class="text-center uppercase">
-                            Delay
+                        <th scope="col" class="text-center">
+                            DELAY (ms)
                         </th>
-                        <th scope="col" class="text-center uppercase">
-                            Jitter
+                        <th scope="col" class="text-center">
+                            JITTER (ms)
                         </th>
-                        <th scope="col" class="text-center uppercase">
-                            created_at
+                        <th scope="col" class="text-center">
+                            WAKTU
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($nodeSendLogs as $nodeSendLog)
-                        <tr>
-                            <th scope="row" class=" text-center">
-                                {{ $loop->iteration }}
+                        <tr class="text-center">
+                            <th scope="row">
+                                {{ ($nodeSendLogs->currentPage() - 1) * $nodeSendLogs->perPage() + $loop->iteration }}
+                                {{-- {{ $loop->iteration }} --}}
                             </th>
                             <td>
                                 {{ $nodeSendLog->node->name ?? '-' }}
                             </td>
                             <td>
-                                @if ($nodeSendLog->node->sensor == 'dht')
-                                    <ul class="space-y-1">
+                                @if ($nodeSendLog->node->connected_sensor == 'dht')
+                                    <ul>
                                         <li>
-                                            Suhu: {{ $nodeSendLog->airTemperature->temperature ?? '-' }}
+                                            <span class="font-medium">Suhu:</span>
+                                            {{ $nodeSendLog->airTemperature ? $nodeSendLog->airTemperature->temperature . '℃' : '-' }}
                                         </li>
                                         <li>
-                                            Kelembapan : {{ $nodeSendLog->humidity->humidity ?? '-' }}
+                                            <span class="font-medium">Kelembapan:</span>
+                                            {{ $nodeSendLog->humidity ? $nodeSendLog->humidity->humidity . '%' : '-' }}
                                         </li>
                                     </ul>
                                 @else
-                                    <ul class="space-y-1">
+                                    <ul>
                                         @foreach ($nodeSendLog->soilMoistures as $soilMoisture)
                                             <li>
-                                                {{ $soilMoisture->plant->name ?? '-' }}
-                                                {{ $soilMoisture->plant->location ? '(' . $soilMoisture->plant->location . ')' : '' }}:
-                                                {{ $soilMoisture->moisture ?? '-' }}
+                                                <span class="font-medium">
+                                                    {{ $soilMoisture->plant->name ?? '-' }}
+                                                    {{ $soilMoisture->plant->location ? '(' . $soilMoisture->plant->location . ')' : '' }}:
+                                                </span>
+                                                {{ $soilMoisture->moisture . '%' }}
                                             </li>
                                         @endforeach
                                     </ul>
@@ -101,6 +177,9 @@
                 </tbody>
             </table>
         </div>
+        <div class="mx-2 pb-3">
+            {{ $nodeSendLogs->links() }}
+        </div>
     </div>
 @endsection
 
@@ -114,7 +193,8 @@
     <script>
         $(document).ready(function() {
             $('.datatable').DataTable({
-                "pageLength": 100,
+                info: false,
+                paging: false
             });
         });
     </script>
