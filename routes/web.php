@@ -31,7 +31,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('/logout', 'logout')->name('logout')->middleware('auth');
 });
 
-Route::prefix('/dashboard')->name('dashboard.')->group(function () {
+Route::middleware('auth')->prefix('/dashboard')->name('dashboard.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
     // Route::get('/create', [DashboardController::class, 'create'])->name('create');
     // Route::post('/', [DashboardController::class, 'store'])->name('store');
@@ -42,7 +42,7 @@ Route::prefix('/dashboard')->name('dashboard.')->group(function () {
 });
 
 
-Route::prefix('/nodes')->name('nodes.')->group(function () {
+Route::middleware('auth')->prefix('/nodes')->name('nodes.')->group(function () {
     Route::get('/', [NodeController::class, 'index'])->name('index');
     Route::get('/create', [NodeController::class, 'create'])->name('create');
     Route::post('/', [NodeController::class, 'store'])->name('store');
@@ -52,7 +52,7 @@ Route::prefix('/nodes')->name('nodes.')->group(function () {
     Route::delete('/{node}', [NodeController::class, 'destroy'])->name('destroy');
 });
 
-Route::prefix('/tanaman')->name('plants.')->group(function () {
+Route::middleware('auth')->prefix('/tanaman')->name('plants.')->group(function () {
     Route::get('/', [PlantController::class, 'index'])->name('index');
     Route::get('/create', [PlantController::class, 'create'])->name('create');
     Route::post('/', [PlantController::class, 'store'])->name('store');
@@ -62,7 +62,7 @@ Route::prefix('/tanaman')->name('plants.')->group(function () {
     Route::delete('/{plant}', [PlantController::class, 'destroy'])->name('destroy');
 });
 
-Route::prefix('/log-pengiriman')->name('node-send-logs.')->group(function () {
+Route::middleware('auth')->prefix('/log-pengiriman')->name('node-send-logs.')->group(function () {
     Route::get('/', [NodeSendLogController::class, 'index'])->name('index');
     Route::get('/create', [NodeSendLogController::class, 'create'])->name('create');
     Route::post('/', [NodeSendLogController::class, 'store'])->name('store');
@@ -91,12 +91,4 @@ Route::middleware('auth')->prefix('/profile')->name('profile.')->group(function 
 //     Route::get('/{photo}/edit', [PhotoController::class, 'edit'])->name('edit');
 //     Route::put('/{photo}', [PhotoController::class, 'update'])->name('update');
 //     Route::delete('/{photo}', [PhotoController::class, 'destroy'])->name('destroy');
-// });
-
-
-// Route::group(['prefix' => 'profile', 'as' => 'profile.'], function () {
-//     // Route: : get('/', 'ProfileController@index' )->name( 'profile');
-//     // Route: : put('/update/{user}', 'ProfileController@editProfile' )->name('update' );
-//     // Route: : get('/change-password', 'ProfileController@changePasswordPages' )->name( ' change-password' ) ;
-//     // Route: : put('/change-password', 'ProfileController@changePassword' )->name( 'change-password. submit' );
 // });
