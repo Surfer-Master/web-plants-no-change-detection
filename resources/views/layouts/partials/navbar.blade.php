@@ -23,7 +23,7 @@
                 </svg>
             </button> --}}
 
-            <!-- Notifications -->
+            {{-- <!-- Notifications -->
             <button type="button" data-dropdown-toggle="notification-dropdown"
                 class="p-2 mr-1 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
                 <span class="sr-only">View notifications</span>
@@ -33,8 +33,8 @@
                     <path
                         d="M12.133 10.632v-1.8A5.406 5.406 0 0 0 7.979 3.57.946.946 0 0 0 8 3.464V1.1a1 1 0 0 0-2 0v2.364a.946.946 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C1.867 13.018 0 13.614 0 14.807 0 15.4 0 16 .538 16h12.924C14 16 14 15.4 14 14.807c0-1.193-1.867-1.789-1.867-4.175ZM3.823 17a3.453 3.453 0 0 0 6.354 0H3.823Z" />
                 </svg>
-            </button>
-            <!-- Dropdown menu -->
+            </button> --}}
+            {{-- <!-- Dropdown menu -->
             <div class="hidden overflow-hidden z-50 my-4 max-w-sm text-base list-none bg-white rounded divide-y divide-gray-100 shadow-lg dark:divide-gray-600 dark:bg-gray-700"
                 id="notification-dropdown">
                 <div
@@ -177,9 +177,10 @@
                         View all
                     </div>
                 </a>
-            </div>
-            <!-- Apps -->
-            {{-- <button type="button" data-dropdown-toggle="apps-dropdown"
+            </div> --}}
+
+            {{-- <!-- Apps -->
+            <button type="button" data-dropdown-toggle="apps-dropdown"
                 class="p-2 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
                 <span class="sr-only">View notifications</span>
                 <!-- Icon -->
@@ -189,7 +190,7 @@
                         d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" />
                 </svg>
             </button> --}}
-            <!-- Dropdown menu -->
+            {{-- <!-- Dropdown menu -->
             <div class="hidden overflow-hidden z-50 my-4 max-w-sm text-base list-none bg-white rounded divide-y divide-gray-100 shadow-lg dark:bg-gray-700 dark:divide-gray-600"
                 id="apps-dropdown">
                 <div
@@ -296,14 +297,14 @@
                         <div class="text-sm font-medium text-gray-900 dark:text-white">Logout</div>
                     </a>
                 </div>
-            </div>
+            </div> --}}
             <button type="button"
                 class="flex mx-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                 id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown">
                 <span class="sr-only">Open user menu</span>
                 <img class="w-8 h-8 rounded-full" src="{{ asset('img/user.png') }}" alt="user photo">
             </button>
-            <!-- Dropdown menu -->
+            {{-- <!-- Dropdown menu --> --}}
             <div class="hidden z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
                 id="user-dropdown">
                 <div class="py-3 px-4">
@@ -314,7 +315,7 @@
                 </div>
                 <ul class="py-1 text-gray-500 dark:text-gray-400" aria-labelledby="dropdown">
                     <li>
-                        <a href="{{ route('profile.index') }}"
+                        <a href="#"
                             class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white">
                             My Profile
                         </a>
@@ -352,25 +353,25 @@
                 class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                 <li>
                     <a href="{{ route('dashboard.index') }}"
-                        class="block py-2 px-3 rounded md:p-0 {{ Request::is('dashboard*') ? 'text-white bg-blue-700 md:bg-transparent md:text-blue-700 md:dark:text-blue-500' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700' }}"
+                        class="block py-2 px-3 rounded md:p-0 {{ Request::is('dashboard*') ? 'text-white font-semibold bg-blue-700 md:bg-transparent md:text-blue-700 md:dark:text-blue-500' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700' }}"
                         aria-current="page">Dashboard</a>
                 </li>
                 <li>
                     <a href="{{ route('nodes.index') }}"
-                        class="block py-2 px-3 rounded md:p-0 {{ Request::is('node*') ? 'text-white bg-blue-700 md:bg-transparent md:text-blue-700 md:dark:text-blue-500' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700' }}">Node</a>
+                        class="block py-2 px-3 rounded md:p-0 {{ Request::is('node*') ? 'text-white font-semibold bg-blue-700 md:bg-transparent md:text-blue-700 md:dark:text-blue-500' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700' }}">Node</a>
                 </li>
                 <li>
                     <a href="{{ route('plants.index') }}"
-                        class="block py-2 px-3 rounded md:p-0 {{ Request::is('tanaman*') ? 'text-white bg-blue-700 md:bg-transparent md:text-blue-700 md:dark:text-blue-500' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700' }}">Tanaman</a>
+                        class="block py-2 px-3 rounded md:p-0 {{ Request::is('tanaman*') ? 'text-white font-semibold bg-blue-700 md:bg-transparent md:text-blue-700 md:dark:text-blue-500' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700' }}">Tanaman</a>
                 </li>
                 <li>
                     <a href="{{ route('node-send-logs.index') }}"
-                        class="block py-2 px-3 rounded md:p-0 {{ Request::is('log-pengiriman*') ? 'text-white bg-blue-700 md:bg-transparent md:text-blue-700 md:dark:text-blue-500' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700' }}">Log
+                        class="block py-2 px-3 rounded md:p-0 {{ Request::is('log-pengiriman*') ? 'text-white font-semibold bg-blue-700 md:bg-transparent md:text-blue-700 md:dark:text-blue-500' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700' }}">Log
                         Pengiriman</a>
                 </li>
                 {{-- <li>
                     <a href="#"
-                        class="block py-2 px-3 rounded md:p-0 {{ Request::is('dashboard*') ? 'text-white bg-blue-700 md:bg-transparent md:text-blue-700 md:dark:text-blue-500' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700' }}">Contact</a>
+                        class="block py-2 px-3 rounded md:p-0 {{ Request::is('dashboard*') ? 'text-white font-semibold bg-blue-700 md:bg-transparent md:text-blue-700 md:dark:text-blue-500' : 'text-gray-900 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700' }}">Contact</a>
                 </li> --}}
             </ul>
         </div>
