@@ -48,7 +48,8 @@
                                 </div>
                                 <input type="email" name="email" id="email"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 group-[.is-invalid]:text-red-600 group-[.is-invalid]:border-red-300 group-[.is-invalid]:focus:ring-red-600 group-[.is-invalid]:focus:border-red-600 group-[.is-invalid]:placeholder-red-600"
-                                    placeholder="Masukkan Email" value="{{ old('email') }}" required>
+                                    placeholder="Masukkan Email" value="{{ old('email') }}" autocomplete="email"
+                                    required>
                             </div>
                             @error('email')
                                 <div class="mt-2 text-sm text-red-600 dark:text-red-500"><span
@@ -65,7 +66,7 @@
                                 </div>
                                 <input type="password" name="password" id="password" placeholder="Masukkan Password"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full px-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 group-[.is-invalid]:text-red-600 group-[.is-invalid]:border-red-300 group-[.is-invalid]:focus:ring-red-600 group-[.is-invalid]:focus:border-red-600 group-[.is-invalid]:placeholder-red-600"
-                                    required>
+                                    autocomplete="off" required>
                                 <div class="absolute inset-y-0 right-0 flex items-center pe-3.5 cursor-pointer">
                                     <i class="fa-solid fa-eye-slash"></i>
                                 </div>
