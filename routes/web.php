@@ -20,9 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('index', [
-        'title' => 'Smart Farming',
-    ]);
+    return redirect('/login');
 });
 
 Route::controller(AuthController::class)->group(function () {
