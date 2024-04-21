@@ -78,7 +78,11 @@
                 <h5 class="text-lg font-bold text-gray-900 dark:text-white">Penyimpanan</h5>
                 <div id="storage-radial-chart"></div>
                 <div class="font-semibold -mt-6 text-center">
-                    {{ $storageSize->total_size_MB ?? 0 }} MB / 1024,00 MB
+                    @if ($storageSize->total_size_MB ?? 0 > 1024)
+                        {{ number_format(($storageSize->total_size_MB ?? 0) / 1024, 2) }} GB / 5,00 GB
+                    @else
+                        {{ $storageSize->total_size_MB ?? 0 }} MB / 5,00 GB
+                    @endif
                 </div>
             </div>
         </div>
@@ -249,7 +253,7 @@
         humidityChart.render();
 
         var storageRadialChartOptions = {
-            series: [{{ (($storageSize->total_size_MB ?? 0) / 1024) * 100 }}],
+            series: [{{ (($storageSize->total_size_MB ?? 0) / 5120) * 100 }}],
             colors: ['#eab308'],
             chart: {
                 height: 275,
