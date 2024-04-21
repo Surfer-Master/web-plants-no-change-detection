@@ -105,7 +105,9 @@
 
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-    <script src="{{ asset('vendor/dotlottie/player-component/dist/dotlottie-player.mjs') }}" type="module"></script>
+    {{-- <script src="{{ asset('vendor/dotlottie/player-component/dist/dotlottie-player.mjs') }}" type="module"></script> --}}
+    {{-- <script src="{{ asset('vendor/dotlottie/player-component/dist/dotlottie-player.js') }}"></script> --}}
+    <script type="module" src="https://unpkg.com/@dotlottie/player-component@2.3.0/dist/dotlottie-player.mjs"></script>
     <script src="{{ asset('js/scripts.min.js') }}"></script>
 </body>
 
