@@ -19,10 +19,8 @@
     <section class="bg-gray-50 dark:bg-gray-900 h-screen flex">
         <div class="flex-1 hidden md:block">
             <div class="flex h-screen items-center justify-center">
-                <div>
-                    <dotlottie-player src="{{ asset('dotlottie/ZVeyQfBhu0.lottie') }}" background="transparent"
-                        speed="1" style="width: auto; height: auto;" loop autoplay></dotlottie-player>
-                </div>
+                <dotlottie-player src="{{ asset('dotlottie/ZVeyQfBhu0.lottie') }}" background="transparent"
+                    speed="1" style="width: auto; height: auto;" loop autoplay></dotlottie-player>
             </div>
         </div>
         <div class="flex-1 flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen">
