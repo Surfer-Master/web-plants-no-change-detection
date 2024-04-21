@@ -78,7 +78,7 @@
                 <h5 class="text-lg font-bold text-gray-900 dark:text-white">Penyimpanan</h5>
                 <div id="storage-radial-chart"></div>
                 <div class="font-semibold -mt-6 text-center">
-                    @if ($storageSize->total_size_MB ?? 0 > 1024)
+                    @if (($storageSize->total_size_MB ?? 0) > 1024)
                         {{ number_format(($storageSize->total_size_MB ?? 0) / 1024, 2) }} GB / 5,00 GB
                     @else
                         {{ $storageSize->total_size_MB ?? 0 }} MB / 5,00 GB
