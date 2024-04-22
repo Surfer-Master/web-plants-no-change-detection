@@ -64,7 +64,8 @@
                     <ul>
                         @foreach ($nodes as $node)
                             <li class="text-base font-bold text-gray-800">
-                                {{ $node->name }} : {{ $node->delay !== null ? $node->delay . ' ms' : '-' }}
+                                {{ $node->name }} :
+                                {{ $node->node_send_logs_avg_delay !== null ? number_format($node->node_send_logs_avg_delay, 2) . ' ms' : '-' }}
                             </li>
                         @endforeach
                     </ul>
@@ -81,7 +82,8 @@
                     <ul>
                         @foreach ($nodes as $node)
                             <li class="text-base font-bold text-gray-800">
-                                {{ $node->name }} : {{ $node->jitter !== null ? $node->jitter . ' ms' : '-' }}
+                                {{ $node->name }} :
+                                {{ $node->node_send_logs_avg_jitter !== null ? number_format($node->node_send_logs_avg_jitter, 2) . ' ms' : '-' }}
                             </li>
                         @endforeach
                     </ul>
