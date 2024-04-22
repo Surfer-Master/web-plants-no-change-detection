@@ -29,7 +29,6 @@ class NodeSendLogController extends Controller
             ->withAvg('nodeSendLogs', 'jitter')
             ->get();
 
-        // number_format(12000, 2, ',', '.')
         foreach ($nodes as $key => $node) {
             $node->packet_loss_count = $node->latestNodeSendLog && $node->latestNodeSendLog->data_send_count ? $node->latestNodeSendLog->data_send_count - $node->node_send_logs_count : null;
             $node->packet_loss = $node->latestNodeSendLog && $node->latestNodeSendLog->data_send_count ? number_format((($node->latestNodeSendLog->data_send_count - $node->node_send_logs_count) / $node->latestNodeSendLog->data_send_count) * 100, 2) : null;
@@ -143,17 +142,17 @@ class NodeSendLogController extends Controller
             ->with(['latestNodeSendLog' => function ($query) use ($startDateTime, $endDateTime) {
                 $query->whereBetween('created_at', [$startDateTime, $endDateTime]);
             }])
+            ->withAvg(['nodeSendLogs' => function ($query) use ($startDateTime, $endDateTime) {
+                $query->whereBetween('created_at', [$startDateTime, $endDateTime]);
+            }], 'delay')
+            ->withAvg(['nodeSendLogs' => function ($query) use ($startDateTime, $endDateTime) {
+                $query->whereBetween('created_at', [$startDateTime, $endDateTime]);
+            }], 'jitter')
             ->get();
 
         foreach ($nodes as $key => $node) {
-            $node->packet_loss_count = $node->latestNodeSendLog ? $node->latestNodeSendLog->data_send_count - $node->node_send_logs_count : null;
-            $node->packet_loss = $node->latestNodeSendLog ? number_format((($node->latestNodeSendLog->data_send_count - $node->node_send_logs_count) / $node->latestNodeSendLog->data_send_count) * 100, 2) : null;
-
-            $delays = $node->nodeSendLogs->pluck('delay')->toArray();
-            $node->delay = count($delays) > 0 ? number_format(array_sum($delays) / count($delays), 2) : null;
-
-            $jitters = $node->nodeSendLogs->pluck('jitter')->toArray();
-            $node->jitter = count($delays) > 1 ? number_format(array_sum($jitters) / (count($jitters) - 1), 2) : null;
+            $node->packet_loss_count = $node->latestNodeSendLog && $node->latestNodeSendLog->data_send_count ? $node->latestNodeSendLog->data_send_count - $node->node_send_logs_count : null;
+            $node->packet_loss = $node->latestNodeSendLog && $node->latestNodeSendLog->data_send_count ? number_format((($node->latestNodeSendLog->data_send_count - $node->node_send_logs_count) / $node->latestNodeSendLog->data_send_count) * 100, 2) : null;
         }
 
         $nodeSendLogs = NodeSendLog::with([
