@@ -62,12 +62,13 @@ Route::middleware('auth')->prefix('/tanaman')->name('plants.')->group(function (
 
 Route::middleware('auth')->prefix('/log-pengiriman')->name('node-send-logs.')->group(function () {
     Route::get('/', [NodeSendLogController::class, 'index'])->name('index');
-    Route::get('/create', [NodeSendLogController::class, 'create'])->name('create');
-    Route::post('/', [NodeSendLogController::class, 'store'])->name('store');
-    Route::get('/{nodeSendLog}', [NodeSendLogController::class, 'show'])->name('show');
-    Route::get('/{nodeSendLog}/edit', [NodeSendLogController::class, 'edit'])->name('edit');
-    Route::put('/{nodeSendLog}', [NodeSendLogController::class, 'update'])->name('update');
-    Route::delete('/{nodeSendLog}', [NodeSendLogController::class, 'destroy'])->name('destroy');
+    Route::post('/', [NodeSendLogController::class, 'find'])->name('find');
+    // Route::get('/create', [NodeSendLogController::class, 'create'])->name('create');
+    // Route::post('/', [NodeSendLogController::class, 'store'])->name('store');
+    // Route::get('/{nodeSendLog}', [NodeSendLogController::class, 'show'])->name('show');
+    // Route::get('/{nodeSendLog}/edit', [NodeSendLogController::class, 'edit'])->name('edit');
+    // Route::put('/{nodeSendLog}', [NodeSendLogController::class, 'update'])->name('update');
+    // Route::delete('/{nodeSendLog}', [NodeSendLogController::class, 'destroy'])->name('destroy');
 });
 
 Route::middleware('auth')->prefix('/profile')->name('profile.')->group(function () {

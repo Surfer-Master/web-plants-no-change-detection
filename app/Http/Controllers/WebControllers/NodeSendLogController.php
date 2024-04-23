@@ -22,16 +22,18 @@ class NodeSendLogController extends Controller
         // https://demos.creative-tim.com/material-tailwind-dashboard-react/?AFFILIATE=52980#/dashboard/home
         // https://preview.themeforest.net/item/yeti-admin-tailwind-css/full_screen_preview/29702349?clickid=2bnWKly9rxyPTl7Ul03Hr17qUkHR8x2xPUK50g0&iradid=275988&iradtype=ONLINE_TRACKING_LINK&irgwc=1&irmptype=mediapartner&irpid=369282&mp_value1=&utm_campaign=af_impact_radius_369282&utm_medium=affiliate&utm_source=impact_radius
 
-        $user = auth()->user();
         $nodes = Node::withcount(['nodeSendLogs'])
-            ->with(['latestNodeSendLog'])
+            ->with(['oldestNodeSendLog', 'latestNodeSendLog'])
             ->withAvg('nodeSendLogs', 'delay')
             ->withAvg('nodeSendLogs', 'jitter')
             ->get();
 
         foreach ($nodes as $key => $node) {
-            $node->packet_loss_count = $node->latestNodeSendLog && $node->latestNodeSendLog->data_send_count ? $node->latestNodeSendLog->data_send_count - $node->node_send_logs_count : null;
-            $node->packet_loss = $node->latestNodeSendLog && $node->latestNodeSendLog->data_send_count ? number_format((($node->latestNodeSendLog->data_send_count - $node->node_send_logs_count) / $node->latestNodeSendLog->data_send_count) * 100, 2) : null;
+            $packetLossCount = $node->node_send_logs_count ? (($node->latestNodeSendLog->data_send_count ?? 0) - ($node->oldestNodeSendLog->data_send_count ?? 0) - ($node->node_send_logs_count ?? 0) + 1) : 0;
+            $packetLoss = $node->latestNodeSendLog && $node->latestNodeSendLog->data_send_count ? (($packetLossCount / $node->latestNodeSendLog->data_send_count) * 100) : null;
+
+            $node->packet_loss_count = $packetLossCount;
+            $node->packet_loss = $packetLoss;
         }
 
         $nodeSendLogs = NodeSendLog::with([
@@ -40,37 +42,6 @@ class NodeSendLogController extends Controller
             'humidity',
             'soilMoistures' => ['plant']
         ])->paginate(100);
-
-
-        // $startDateTime = today();
-        // $endDateTime = now();
-
-        // $nodes = Node::withCount(['nodeSendLogs' => function ($query) use ($startDateTime, $endDateTime) {
-        //     $query->whereBetween('created_at', [$startDateTime, $endDateTime]);
-        // }])
-        //     ->with(['latestNodeSendLog' => function ($query) use ($startDateTime, $endDateTime) {
-        //         $query->whereBetween('created_at', [$startDateTime, $endDateTime]);
-        //     }])
-        //     ->withAvg(['nodeSendLogs' => function ($query) use ($startDateTime, $endDateTime) {
-        //         $query->whereBetween('created_at', [$startDateTime, $endDateTime]);
-        //     }], 'delay')
-        //     ->withAvg(['nodeSendLogs' => function ($query) use ($startDateTime, $endDateTime) {
-        //         $query->whereBetween('created_at', [$startDateTime, $endDateTime]);
-        //     }], 'jitter')
-        //     ->get();
-
-        // foreach ($nodes as $key => $node) {
-        //     $node->packet_loss_count = $node->latestNodeSendLog && $node->latestNodeSendLog->data_send_count ? $node->latestNodeSendLog->data_send_count - $node->node_send_logs_count : null;
-        //     $node->packet_loss = $node->latestNodeSendLog && $node->latestNodeSendLog->data_send_count ? number_format((($node->latestNodeSendLog->data_send_count - $node->node_send_logs_count) / $node->latestNodeSendLog->data_send_count) * 100, 2) : null;
-        // }
-
-        // $nodeSendLogs = NodeSendLog::with([
-        //     'node',
-        //     'airTemperature',
-        //     'humidity',
-        //     'soilMoistures' => ['plant']
-        // ])->whereBetween('created_at', [$startDateTime, $endDateTime])
-        //     ->paginate(100);
 
         return view('node-send-logs.index', [
             'title' => 'Smart Farming | Log Pengiriman',
@@ -126,6 +97,7 @@ class NodeSendLogController extends Controller
     {
         //
     }
+
     public function find(Request $request)
     {
         $request->validate([
@@ -139,6 +111,9 @@ class NodeSendLogController extends Controller
         $nodes = Node::withCount(['nodeSendLogs' => function ($query) use ($startDateTime, $endDateTime) {
             $query->whereBetween('created_at', [$startDateTime, $endDateTime]);
         }])
+            ->with(['oldestNodeSendLog' => function ($query) use ($startDateTime, $endDateTime) {
+                $query->whereBetween('created_at', [$startDateTime, $endDateTime]);
+            }])
             ->with(['latestNodeSendLog' => function ($query) use ($startDateTime, $endDateTime) {
                 $query->whereBetween('created_at', [$startDateTime, $endDateTime]);
             }])
@@ -151,8 +126,11 @@ class NodeSendLogController extends Controller
             ->get();
 
         foreach ($nodes as $key => $node) {
-            $node->packet_loss_count = $node->latestNodeSendLog && $node->latestNodeSendLog->data_send_count ? $node->latestNodeSendLog->data_send_count - $node->node_send_logs_count : null;
-            $node->packet_loss = $node->latestNodeSendLog && $node->latestNodeSendLog->data_send_count ? number_format((($node->latestNodeSendLog->data_send_count - $node->node_send_logs_count) / $node->latestNodeSendLog->data_send_count) * 100, 2) : null;
+            $packetLossCount = $node->node_send_logs_count ? (($node->latestNodeSendLog->data_send_count ?? 0) - ($node->oldestNodeSendLog->data_send_count ?? 0) - ($node->node_send_logs_count ?? 0) + 1)  : 0;
+            $packetLoss = $node->latestNodeSendLog && $node->latestNodeSendLog->data_send_count ? (($packetLossCount / $node->latestNodeSendLog->data_send_count) * 100) : null;
+
+            $node->packet_loss_count = $packetLossCount;
+            $node->packet_loss = $packetLoss;
         }
 
         $nodeSendLogs = NodeSendLog::with([
@@ -167,6 +145,8 @@ class NodeSendLogController extends Controller
             'title' => 'Smart Farming | Log Pengiriman',
             'nodes' => $nodes,
             'nodeSendLogs' => $nodeSendLogs,
+            'startDateTime' => $startDateTime,
+            'startDateTime'  => $endDateTime
         ]);
     }
 }

@@ -23,75 +23,69 @@
     </div>
     <div class="grid pb-6 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div class="block p-5 bg-white border-l-[0.25rem] border-primary-600 rounded-lg shadow">
-            <div class="flex justify-between">
-                <div>
-                    <div class="text-xs font-bold text-primary-600 uppercase mb-1">Jumlah Log Pengiriman</div>
-                    <ul>
-                        @foreach ($nodes as $node)
-                            <li class="text-base font-bold text-gray-800">
-                                {{ $node->name }} : {{ $node->node_send_logs_count }}
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-                {{-- <div class="my-auto">
-                    <i class="fa-solid fa-circle-nodes fa-2xl text-gray-300"></i>
-                </div> --}}
+            <div class="mb-2">
+                <div class="text-xs font-bold text-primary-600 uppercase mb-1">Jumlah Log Pengiriman</div>
+                <ul>
+                    @foreach ($nodes as $node)
+                        <li class="text-base font-bold text-gray-800">
+                            {{ $node->name }} : {{ number_format($node->node_send_logs_count) }}
+                        </li>
+                    @endforeach
+                </ul>
             </div>
+            <h5 class="text-lg font-bold text-primary-600">
+                Total : {{ number_format($nodes->sum('node_send_logs_count')) }}
+            </h5>
         </div>
         <div class="block p-5 bg-white border-l-[0.25rem] border-green-600 rounded-lg shadow">
-            <div class="flex justify-between">
-                <div>
-                    <div class="text-xs font-bold text-green-600 uppercase mb-1">Packet Loss</div>
-                    <ul>
-                        @foreach ($nodes as $node)
-                            <li class="text-base font-bold text-gray-800">
-                                {{ $node->name }} : {{ $node->packet_loss !== null ? $node->packet_loss . '%' : '-' }}
-                                {{ $node->packet_loss_count !== null ? '(' . $node->packet_loss_count . ')' : '' }}
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-                {{-- <div class="my-auto">
-                    <i class="fa-solid fa-seedling fa-2xl text-gray-300"></i>
-                </div> --}}
+            <div class="mb-2">
+                <div class="text-xs font-bold text-green-600 uppercase mb-1">Packet Loss</div>
+                <ul>
+                    @foreach ($nodes as $node)
+                        <li class="text-base font-bold text-gray-800">
+                            {{ $node->name }} :
+                            {{ $node->packet_loss !== null ? number_format($node->packet_loss, 2) . '%' : '-' }}
+                            {{ $node->packet_loss_count ? '(' . number_format($node->packet_loss_count) . ')' : '' }}
+                        </li>
+                    @endforeach
+                </ul>
             </div>
+            <h5 class="text-lg font-bold text-green-600">
+                Total : {{ number_format($nodes->sum('packet_loss'), 2) . '%' }}
+                ({{ number_format($nodes->sum('packet_loss_count')) }})
+            </h5>
         </div>
         <div class="block p-5 bg-white border-l-[0.25rem] border-sky-600 rounded-lg shadow">
-            <div class="flex justify-between">
-                <div>
-                    <div class="text-xs font-bold text-sky-600 uppercase mb-1">Delay Rata-Rata</div>
-                    <ul>
-                        @foreach ($nodes as $node)
-                            <li class="text-base font-bold text-gray-800">
-                                {{ $node->name }} :
-                                {{ $node->node_send_logs_avg_delay !== null ? number_format($node->node_send_logs_avg_delay, 2) . ' ms' : '-' }}
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-                {{-- <div class="my-auto">
-                    <i class="fa-solid fa-arrow-trend-up fa-2xl text-gray-300"></i>
-                </div> --}}
+            <div class="mb-2">
+                <div class="text-xs font-bold text-sky-600 uppercase mb-1">Delay Rata-Rata</div>
+                <ul>
+                    @foreach ($nodes as $node)
+                        <li class="text-base font-bold text-gray-800">
+                            {{ $node->name }} :
+                            {{ $node->node_send_logs_avg_delay !== null ? number_format($node->node_send_logs_avg_delay, 2) . ' ms' : '-' }}
+                        </li>
+                    @endforeach
+                </ul>
             </div>
+            <h5 class="text-lg font-bold text-sky-600">
+                Total Rata-Rata: {{ number_format($nodes->avg('node_send_logs_avg_delay'), 2) . ' ms' }}
+            </h5>
         </div>
         <div class="block p-5 bg-white border-l-[0.25rem] border-red-600 rounded-lg shadow">
-            <div class="flex justify-between">
-                <div>
-                    <div class="text-xs font-bold text-red-600 uppercase mb-1">Jitter</div>
-                    <ul>
-                        @foreach ($nodes as $node)
-                            <li class="text-base font-bold text-gray-800">
-                                {{ $node->name }} :
-                                {{ $node->node_send_logs_avg_jitter !== null ? number_format($node->node_send_logs_avg_jitter, 2) . ' ms' : '-' }}
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-                {{-- <div class="my-auto">
-                    <i class="fa-solid fa-users fa-2xl text-gray-300"></i>
-                </div> --}}
+            <div class="mb-2">
+                <div class="text-xs font-bold text-red-600 uppercase mb-1">Jitter</div>
+                <ul>
+                    @foreach ($nodes as $node)
+                        <li class="text-base font-bold text-gray-800">
+                            {{ $node->name }} :
+                            {{ $node->node_send_logs_avg_jitter !== null ? number_format($node->node_send_logs_avg_jitter, 2) . ' ms' : '-' }}
+                        </li>
+                    @endforeach
+                </ul>
             </div>
+            <h5 class="text-lg font-bold text-red-600">
+                Total Rata-Rata: {{ number_format($nodes->avg('node_send_logs_avg_jitter'), 2) . ' ms' }}
+            </h5>
         </div>
     </div>
 
