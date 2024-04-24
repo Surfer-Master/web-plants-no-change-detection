@@ -81,7 +81,7 @@
                     @if (($storageSize->total_size_MB ?? 0) > 1024)
                         {{ number_format(($storageSize->total_size_MB ?? 0) / 1024, 2) }} GB / 5,00 GB
                     @else
-                        {{ $storageSize->total_size_MB ?? 0 }} MB / 5,00 GB
+                        {{ $storageSize->total_size_MB ?? '-' }} MB / 5,00 GB
                     @endif
                 </div>
             </div>
