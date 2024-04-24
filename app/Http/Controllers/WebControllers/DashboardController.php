@@ -28,9 +28,10 @@ class DashboardController extends Controller
         $nodeSendLogsCount = NodeSendLog::count();
         $usersCount = User::count();
 
+        $database = config('database.connections.mysql.database');
         $storageSize = DB::table('information_schema.tables')
             ->selectRaw('round(SUM(data_length + index_length)/ 1024 / 1024, 2) as total_size_MB')
-            ->where('table_schema', '=', env('DB_DATABASE'))
+            ->where('table_schema', '=', $database)
             ->first();
 
         // Cara Mendapatkan Ukuran tabel Pada database
