@@ -68,7 +68,7 @@
                 </ul>
             </div>
             <h5 class="text-lg font-bold text-sky-600">
-                Total Rata-Rata: {{ number_format($nodes->avg('node_send_logs_avg_delay'), 2) . ' ms' }}
+                Total Rata-Rata : {{ number_format($nodes->avg('node_send_logs_avg_delay'), 2) . ' ms' }}
             </h5>
         </div>
         <div class="block p-5 bg-white border-l-[0.25rem] border-red-600 rounded-lg shadow">
@@ -84,7 +84,7 @@
                 </ul>
             </div>
             <h5 class="text-lg font-bold text-red-600">
-                Total Rata-Rata: {{ number_format($nodes->avg('node_send_logs_avg_jitter'), 2) . ' ms' }}
+                Total Rata-Rata : {{ number_format($nodes->avg('node_send_logs_avg_jitter'), 2) . ' ms' }}
             </h5>
         </div>
     </div>
