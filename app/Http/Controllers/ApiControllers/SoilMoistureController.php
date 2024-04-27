@@ -66,7 +66,7 @@ class SoilMoistureController extends Controller
             // $nodeSendLog->jitter = null;
             $nodeSendLog->sensor_read_count = $request->sensor_read_count;
             $nodeSendLog->data_send_count = $request->data_send_count;
-            $nodeSendLog->payload_size = $request->payload_size;
+            // $nodeSendLog->payload_size = $request->payload_size;
             $nodeSendLog->save();
 
             foreach ($request->soil_moistures as $key => $moisture) {
