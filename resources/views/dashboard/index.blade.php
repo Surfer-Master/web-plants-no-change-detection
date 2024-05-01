@@ -17,12 +17,12 @@
 @endpush
 
 @section('content')
-    <div class="grid pb-6 grid-cols-2 gap-4 lg:grid-cols-4">
+    <div class="grid mb-6 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div class="block p-5 bg-white border-l-[0.25rem] border-primary-600 rounded-lg shadow h-24">
             <div class="flex justify-between">
                 <div>
                     <div class="text-xs font-bold text-primary-600 uppercase mb-1">Node</div>
-                    <div class="text-3xl mb-0 font-bold text-gray-800">{{ $nodesCount }}</div>
+                    <div class="text-3xl mb-0 font-bold text-gray-800">{{ number_format($nodesCount) }}</div>
                 </div>
                 <div class="my-auto">
                     <i class="fa-solid fa-circle-nodes fa-2xl text-gray-300"></i>
@@ -33,7 +33,7 @@
             <div class="flex justify-between">
                 <div>
                     <div class="text-xs font-bold text-green-600 uppercase mb-1">Tanaman</div>
-                    <div class="text-3xl mb-0 font-bold text-gray-800">{{ $plants->count() }}</div>
+                    <div class="text-3xl mb-0 font-bold text-gray-800">{{ number_format($plants->count()) }}</div>
                 </div>
                 <div class="my-auto">
                     <i class="fa-solid fa-seedling fa-2xl text-gray-300"></i>
@@ -43,11 +43,11 @@
         <div class="block p-5 bg-white border-l-[0.25rem] border-sky-600 rounded-lg shadow h-24">
             <div class="flex justify-between">
                 <div>
-                    <div class="text-xs font-bold text-sky-600 uppercase mb-1">Log Pengiriman</div>
-                    <div class="text-3xl mb-0 font-bold text-gray-800">{{ $nodeSendLogsCount }}</div>
+                    <div class="text-xs font-bold text-sky-600 uppercase mb-1">Log Penyimpanan</div>
+                    <div class="text-3xl mb-0 font-bold text-gray-800">{{ number_format($nodeSendLogsCount) }}</div>
                 </div>
                 <div class="my-auto">
-                    <i class="fa-solid fa-arrow-trend-up fa-2xl text-gray-300"></i>
+                    <i class="fa-solid fa-bookmark fa-2xl text-gray-300"></i>
                 </div>
             </div>
         </div>
@@ -55,7 +55,7 @@
             <div class="flex justify-between">
                 <div>
                     <div class="text-xs font-bold text-red-600 uppercase mb-1">Users</div>
-                    <div class="text-3xl mb-0 font-bold text-gray-800">{{ $usersCount }}</div>
+                    <div class="text-3xl mb-0 font-bold text-gray-800">{{ number_format($usersCount) }}</div>
                 </div>
                 <div class="my-auto">
                     <i class="fa-solid fa-users fa-2xl text-gray-300"></i>
@@ -81,7 +81,7 @@
                     @if (($storageSize->total_size_MB ?? 0) > 1024)
                         {{ number_format(($storageSize->total_size_MB ?? 0) / 1024, 2) }} GB / 5,00 GB
                     @else
-                        {{ $storageSize->total_size_MB ?? '-' }} MB / 5,00 GB
+                        {{ $storageSize->total_size_MB ?? '-' }} MB / 5.00 GB
                     @endif
                 </div>
             </div>
