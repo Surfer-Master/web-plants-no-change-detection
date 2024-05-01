@@ -111,12 +111,6 @@ class NodeSendLogController extends Controller
         $nodes = Node::withCount(['nodeSendLogs' => function ($query) use ($startDateTime, $endDateTime) {
             $query->whereBetween('created_at', [$startDateTime, $endDateTime]);
         }])
-            ->with(['oldestNodeSendLog' => function ($query) use ($startDateTime, $endDateTime) {
-                $query->whereBetween('created_at', [$startDateTime, $endDateTime]);
-            }])
-            ->with(['latestNodeSendLog' => function ($query) use ($startDateTime, $endDateTime) {
-                $query->whereBetween('created_at', [$startDateTime, $endDateTime]);
-            }])
             ->withAvg(['nodeSendLogs' => function ($query) use ($startDateTime, $endDateTime) {
                 $query->whereBetween('created_at', [$startDateTime, $endDateTime]);
             }], 'delay')
@@ -126,6 +120,8 @@ class NodeSendLogController extends Controller
             ->get();
 
         foreach ($nodes as $key => $node) {
+            $node->oldestNodeSendLog = $node->nodeSendLogs()->whereBetween('created_at', [$startDateTime, $endDateTime])->take(1)->get();
+            $node->latestNodeSendLog = $node->nodeSendLogs()->whereBetween('created_at', [$startDateTime, $endDateTime])->latest()->take(1)->get();
             $packetLossCount = $node->node_send_logs_count ? (($node->latestNodeSendLog->data_send_count ?? 0) - ($node->oldestNodeSendLog->data_send_count ?? 0) - ($node->node_send_logs_count ?? 0) + 1)  : 0;
             $packetLoss = $node->latestNodeSendLog && $node->latestNodeSendLog->data_send_count ? (($packetLossCount / $node->latestNodeSendLog->data_send_count) * 100) : null;
 
