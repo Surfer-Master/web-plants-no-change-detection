@@ -62,11 +62,22 @@
                                 {{ $node->connected_sensor ?? '-' }}
                             </td>
                             <td>
+                                <a href="{{ route('nodes.show', ['node' => $node->id]) }}"
+                                    class="m-1 p-1.5 text-base text-primary-700 rounded-lg hover:text-primary-900 hover:bg-primary-100 dark:text-primary-400 dark:hover:text-white dark:hover:bg-primary-700 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-600"
+                                    title="Detail">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
                                 <a href="{{ route('nodes.edit', ['node' => $node->id]) }}" data-modal-target="node-modal"
-                                    data-modal-toggle="node-modal" class="m-1 btn-edit" title="Edit"><i
-                                        class="fa-solid fa-pen-to-square"></i></a>
-                                <a href="{{ route('nodes.destroy', ['node' => $node->id]) }}" class="m-1 btn-delete"
-                                    title="Hapus"><i class="fa-solid fa-trash-can"></i></a>
+                                    data-modal-toggle="node-modal"
+                                    class="m-1 p-1.5 text-base text-yellow-400 rounded-lg hover:text-yellow-900 hover:bg-yellow-100 dark:text-yellow-400 dark:hover:text-white dark:hover:bg-yellow-700 focus:ring-4 focus:ring-yellow-300 dark:focus:ring-yellow-600 btn-edit"
+                                    title="Edit">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                                <a href="{{ route('nodes.destroy', ['node' => $node->id]) }}"
+                                    class="m-1 p-1.5 text-base text-red-500 rounded-lg hover:text-red-900 hover:bg-red-100 dark:text-red-400 dark:hover:text-white dark:hover:bg-red-700 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-600 btn-delete"
+                                    title="Hapus">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </a>
                             </td>
                         </tr>
                     @endforeach

@@ -20,8 +20,6 @@ class NodeController extends Controller
     {
         $this->authorize('viewAny', Node::class);
 
-        $user = auth()->user();
-
         $nodes = Node::get();
 
         return view('nodes.index', [
@@ -87,6 +85,66 @@ class NodeController extends Controller
     public function show(Node $node)
     {
         $this->authorize('view', $node);
+
+        $node->load([
+            'plants',
+            'oldestNodeSendLog',
+            'latestNodeSendLog'
+        ])->loadCount('nodeSendLogs')
+            ->loadAvg('nodeSendLogs', 'delay')
+            ->loadAvg('nodeSendLogs', 'jitter');
+
+        $node->packet_loss_count =  $node->node_send_logs_count ? (($node->latestNodeSendLog->data_send_count ?? 0) - ($node->oldestNodeSendLog->data_send_count ?? 0) - ($node->node_send_logs_count ?? 0) + 1) : 0;
+
+        $node->packet_loss = $node->latestNodeSendLog && $node->latestNodeSendLog->data_send_count ? (($node->packet_loss_count / $node->latestNodeSendLog->data_send_count) * 100) : null;
+
+        $nodeSendLogs = $node->nodeSendLogs()->with([
+            'node',
+            'airTemperature',
+            'humidity',
+            'soilMoistures' => ['plant']
+        ])->paginate(100);
+
+        $data = $node->nodeSendLogs()->selectRaw('DATE_FORMAT(created_at, "%Y-%m-%d %H:") as interval_start, CONCAT(FLOOR(MINUTE(created_at) / 30) * 30, ":00") as interval_minute, AVG(delay) as average_delay, AVG(jitter) as average_jitter, (MAX(data_send_count) - MIN(data_send_count)) + 1 as data_send_count, ((MAX(data_send_count) - MIN(data_send_count)) + 1) - COUNT(*) as packet_loss_count')
+            ->groupBy('interval_start', 'interval_minute')
+            ->orderBy('interval_start', 'asc')
+            ->orderBy('interval_minute', 'asc')
+            ->get();
+
+        $dataSendChartData = [];
+        $packetLossChartData = [];
+        $delayChartData = [];
+        $jitterChartData = [];
+
+        foreach ($data as $record) {
+            $dataSendChartData[] = [
+                'x' => $record->interval_start . $record->interval_minute,
+                'y' => $record->data_send_count,
+            ];
+            $packetLossChartData[] = [
+                'x' => $record->interval_start . $record->interval_minute,
+                'y' => $record->packet_loss_count,
+            ];
+            $delayChartData[] = [
+                'x' => $record->interval_start . $record->interval_minute,
+                'y' => $record->average_delay,
+            ];
+            $jitterChartData[] = [
+                'x' => $record->interval_start . $record->interval_minute,
+                'y' => $record->average_jitter,
+            ];
+        }
+
+
+        return view('nodes.show', [
+            'title' => 'Smart Farming | Node - ' . $node->name,
+            'node' => $node,
+            'nodeSendLogs' => $nodeSendLogs,
+            'dataSendChartData' => json_encode($dataSendChartData),
+            'packetLossChartData' => json_encode($packetLossChartData),
+            'delayChartData' => json_encode($delayChartData),
+            'jitterChartData' => json_encode($jitterChartData),
+        ]);
     }
 
     /**
@@ -95,7 +153,7 @@ class NodeController extends Controller
     public function edit(Node $node)
     {
         $this->authorize('update', $node);
-        
+
         try {
             return response()->json(
                 [
