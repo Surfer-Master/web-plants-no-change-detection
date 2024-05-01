@@ -42,7 +42,7 @@ Route::middleware('auth')->prefix('/dashboard')->name('dashboard.')->group(funct
 
 Route::middleware('auth')->prefix('/nodes')->name('nodes.')->group(function () {
     Route::get('/', [NodeController::class, 'index'])->name('index');
-    Route::get('/create', [NodeController::class, 'create'])->name('create');
+    // Route::get('/create', [NodeController::class, 'create'])->name('create');
     Route::post('/', [NodeController::class, 'store'])->name('store');
     Route::get('/{node}', [NodeController::class, 'show'])->name('show');
     Route::get('/{node}/edit', [NodeController::class, 'edit'])->name('edit');
@@ -52,7 +52,7 @@ Route::middleware('auth')->prefix('/nodes')->name('nodes.')->group(function () {
 
 Route::middleware('auth')->prefix('/tanaman')->name('plants.')->group(function () {
     Route::get('/', [PlantController::class, 'index'])->name('index');
-    Route::get('/create', [PlantController::class, 'create'])->name('create');
+    // Route::get('/create', [PlantController::class, 'create'])->name('create');
     Route::post('/', [PlantController::class, 'store'])->name('store');
     Route::get('/{plant}', [PlantController::class, 'show'])->name('show');
     Route::get('/{plant}/edit', [PlantController::class, 'edit'])->name('edit');
