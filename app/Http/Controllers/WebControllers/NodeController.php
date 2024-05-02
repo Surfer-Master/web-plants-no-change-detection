@@ -216,6 +216,7 @@ class NodeController extends Controller
         $this->authorize('delete', $node);
 
         try {
+            $node->nodeSendLogs()->delete();
             $node->delete();
 
             return response()->json([
