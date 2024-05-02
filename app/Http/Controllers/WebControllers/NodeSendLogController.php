@@ -16,12 +16,6 @@ class NodeSendLogController extends Controller
      */
     public function index()
     {
-        // https://demos.creative-tim.com/argon-dashboard-pro-tailwind/pages/pages/charts.html
-        // https://demos.creative-tim.com/soft-ui-dashboard-pro-tailwind/pages/pages/charts.html
-        // https://soft-ui-dashboard-pro-tall.creative-tim.com/pages/charts
-        // https://demos.creative-tim.com/material-tailwind-dashboard-react/?AFFILIATE=52980#/dashboard/home
-        // https://preview.themeforest.net/item/yeti-admin-tailwind-css/full_screen_preview/29702349?clickid=2bnWKly9rxyPTl7Ul03Hr17qUkHR8x2xPUK50g0&iradid=275988&iradtype=ONLINE_TRACKING_LINK&irgwc=1&irmptype=mediapartner&irpid=369282&mp_value1=&utm_campaign=af_impact_radius_369282&utm_medium=affiliate&utm_source=impact_radius
-
         $nodes = Node::withcount(['nodeSendLogs'])
             ->with(['oldestNodeSendLog', 'latestNodeSendLog'])
             ->withAvg('nodeSendLogs', 'delay')
