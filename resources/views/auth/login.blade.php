@@ -66,8 +66,9 @@
                                 <input type="password" name="password" id="password" placeholder="Masukkan Password"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full px-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 group-[.is-invalid]:text-red-600 group-[.is-invalid]:border-red-300 group-[.is-invalid]:focus:ring-red-600 group-[.is-invalid]:focus:border-red-600 group-[.is-invalid]:placeholder-red-600"
                                     autocomplete="off" required>
-                                <div class="absolute inset-y-0 right-0 flex items-center pe-3.5 cursor-pointer text-gray-600">
-                                    <i class="fa-solid fa-eye-slash"></i>
+                                <div
+                                    class="absolute inset-y-0 right-0 flex items-center pe-3.5 cursor-pointer text-gray-600">
+                                    <i class="fa-solid fa-eye-slash btn-show-password"></i>
                                 </div>
                             </div>
                             @error('password')
@@ -108,6 +109,21 @@
     {{-- <script src="{{ asset('vendor/dotlottie/player-component/dist/dotlottie-player.mjs') }}" type="module"></script> --}}
     {{-- <script src="{{ asset('vendor/dotlottie/player-component/dist/dotlottie-player.js') }}"></script> --}}
     <script type="module" src="https://unpkg.com/@dotlottie/player-component@2.3.0/dist/dotlottie-player.mjs"></script>
+
+    <script>
+        $('.btn-show-password').on('click', function() {
+            let input = $('#password');
+            let icon = $(this);
+
+            if (input.attr('type') === 'password') {
+                input.attr('type', 'text');
+                icon.removeClass('fa-eye-slash').addClass('fa-eye');
+            } else if (input.attr('type') === 'text') {
+                input.attr('type', 'password');
+                icon.removeClass('fa-eye').addClass('fa-eye-slash');
+            }
+        });
+    </script>
 </body>
 
 </html>
