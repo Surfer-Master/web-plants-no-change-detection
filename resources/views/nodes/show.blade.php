@@ -42,7 +42,7 @@
             <div class="flex justify-between">
                 <div>
                     <div class="text-xs font-bold text-primary-600 uppercase mb-1">Log Penyimpanan</div>
-                    <div class="text-3xl mb-0 font-bold text-gray-800">
+                    <div class="text-2xl mb-0 font-bold text-gray-800">
                         {{ number_format($node->node_send_logs_count) }}</div>
                 </div>
                 <div class="my-auto">
@@ -54,7 +54,7 @@
             <div class="flex justify-between">
                 <div>
                     <div class="text-xs font-bold text-red-600 uppercase mb-1">Packet Loss</div>
-                    <div class="text-3xl mb-0 font-bold text-gray-800">
+                    <div class="text-2xl mb-0 font-bold text-gray-800">
                         {{ $node->packet_loss !== null ? number_format($node->packet_loss, 2) . '%' : '-' }}
                         {{ $node->packet_loss_count ? '(' . number_format($node->packet_loss_count) . ')' : '' }}</div>
                 </div>
@@ -67,7 +67,7 @@
             <div class="flex justify-between">
                 <div>
                     <div class="text-xs font-bold text-sky-600 uppercase mb-1">Delay Rata-Rata</div>
-                    <div class="text-3xl mb-0 font-bold text-gray-800">
+                    <div class="text-2xl mb-0 font-bold text-gray-800">
                         {{ $node->node_send_logs_avg_delay !== null ? number_format($node->node_send_logs_avg_delay, 2) . ' ms' : '-' }}
                     </div>
                 </div>
@@ -80,7 +80,7 @@
             <div class="flex justify-between">
                 <div>
                     <div class="text-xs font-bold text-green-600 uppercase mb-1">Jitter Rata-Rata</div>
-                    <div class="text-3xl mb-0 font-bold text-gray-800">
+                    <div class="text-2xl mb-0 font-bold text-gray-800">
                         {{ $node->node_send_logs_avg_jitter !== null ? number_format($node->node_send_logs_avg_jitter, 2) . ' ms' : '-' }}
                     </div>
                 </div>
