@@ -307,6 +307,9 @@
                 },
                 xaxis: {
                     type: 'datetime',
+                    labels: {
+                        datetimeUTC: false,
+                    }
                 },
                 tooltip: {
                     shared: true,
@@ -394,6 +397,9 @@
                 },
                 xaxis: {
                     type: 'datetime',
+                    labels: {
+                        datetimeUTC: false,
+                    }
                 },
                 tooltip: {
                     shared: true,
