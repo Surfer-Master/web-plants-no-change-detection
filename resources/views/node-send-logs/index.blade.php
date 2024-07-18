@@ -51,7 +51,7 @@
                 </ul>
             </div>
             <h5 class="text-lg font-bold text-red-600">
-                Total : {{ number_format($nodes->sum('packet_loss'), 2) . '%' }}
+                Total : {{ number_format($nodes->avg('packet_loss'), 2) . '%' }}
                 ({{ number_format($nodes->sum('packet_loss_count')) }})
             </h5>
         </div>
