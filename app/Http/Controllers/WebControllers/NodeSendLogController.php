@@ -35,7 +35,8 @@ class NodeSendLogController extends Controller
             'airTemperature',
             'humidity',
             'soilMoistures' => ['plant']
-        ])->paginate(100);
+        ])->orderBy('created_at', 'desc')
+            ->paginate(100);
 
         return view('node-send-logs.index', [
             'title' => 'Smart Farming | Log Pengiriman',

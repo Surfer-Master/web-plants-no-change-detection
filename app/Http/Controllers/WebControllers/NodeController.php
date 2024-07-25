@@ -103,7 +103,8 @@ class NodeController extends Controller
             'airTemperature',
             'humidity',
             'soilMoistures' => ['plant']
-        ])->paginate(100);
+        ])->orderBy('created_at', 'desc')
+            ->paginate(100);
 
         $data = $node->nodeSendLogs()->selectRaw('DATE_FORMAT(created_at, "%Y-%m-%d %H:") as interval_start, CONCAT(FLOOR(MINUTE(created_at) / 30) * 30, ":00") as interval_minute, AVG(delay) as average_delay, AVG(jitter) as average_jitter, (MAX(data_send_count) - MIN(data_send_count)) + 1 as data_send_count, ((MAX(data_send_count) - MIN(data_send_count)) + 1) - COUNT(*) as packet_loss_count')
             ->groupBy('interval_start', 'interval_minute')
